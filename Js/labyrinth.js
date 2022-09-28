@@ -41,7 +41,6 @@ function create ()
     let layer = map.createStaticLayer(0, corals, 0, 50);
     layer.setCollisionBetween(1,1);
     
-    
     let padding = 20;
     shrimp = this.physics.add.image(75, 132, 'shrimp');
     shrimp.setInteractive(
@@ -60,35 +59,47 @@ function create ()
             }
             );
             
-            this.input.on('drag', function (pointer, obj, dragX, dragY) {
-                obj.x = dragX;
-                obj.y = dragY;
-            });
+    this.input.on('drag', function (pointer, obj, dragX, dragY) {
+        obj.x = dragX;
+        obj.y = dragY;
+    });
             
-            goal = this.physics.add.image(600, 500,'star');
+    goal = this.physics.add.image(600, 500,'star');
             
-            this.physics.add.collider(shrimp, goal, CollisionStar, null, this);
+    //this.physics.add.collider(shrimp, layer, CollisionLayer, null, this);
+    this.physics.add.collider(shrimp, goal, CollisionStar, null, this);
             
-        }
-        
-        function CollisionStar(){
-            if(Phaser.Geom.Intersects.RectangleToRectangle(
-                shrimp.getBounds(),goal.getBounds()
-                )) 
-                {
-                    let timerWin = this.time.addEvent({
-                        delay: 200,
-                    callback: youWin,
-                    callbackScope: this,
-                    repeat: 0
-                    });
-            }
-            
-    }
+}
 
-    function youWin(){
-        this.add.text(300, 250, "You Win!",
-            { fontFamily: 'Arial', fontSize: 60, color: '#ffffff' });
-        
+
+// function CollisionLayer()
+// {
+//     if(Phaser.Geom.Intersects.RectangleToRectangle(shrimp.getBounds(),layer.getBounds())) 
+//     {
+//         let timerWin = this.time.addEvent({
+//         delay: 200,
+//         callback: youWin,
+//         callbackScope: this,
+//         repeat: 0 
+//             });
+//     }
+// }
+
+function CollisionStar()
+{
+    if(Phaser.Geom.Intersects.RectangleToRectangle(shrimp.getBounds(),goal.getBounds())) 
+    {
+        let timerWin = this.time.addEvent({
+        delay: 200,
+        callback: youWin,
+        callbackScope: this,
+        repeat: 0 
+            });
     }
+}
+
+function youWin()
+{
+    this.add.text(300, 250, "You Win!", { fontFamily: 'Arial', fontSize: 60, color: '#ffffff' });   
+}
 
