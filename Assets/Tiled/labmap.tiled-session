@@ -1,0 +1,48 @@
+{
+    "Map/SizeTest": {
+        "height": 4300,
+        "width": 2
+    },
+    "activeFile": "",
+    "expandedProjectPaths": [
+    ],
+    "fileStates": {
+        "#Star": {
+            "scaleInDock": 1
+        },
+        "#coral": {
+            "scaleInDock": 1
+        },
+        "#star": {
+            "scaleInDock": 1
+        },
+        "labymap.tmx": {
+            "scale": 1.58175,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 400.18966334755805,
+                "y": 255.41330804488697
+            }
+        },
+        "labymap.tmx#coral": {
+            "scaleInDock": 1
+        }
+    },
+    "last.exportedFilePath": "E:/repos/JavaScript/LabyrinthShrimp/Assets/Tiled",
+    "last.imagePath": "E:/repos/JavaScript/LabyrinthShrimp/Assets/Images",
+    "map.height": 15,
+    "map.lastUsedExportFilter": "All Files (*)",
+    "map.lastUsedFormat": "tmx",
+    "map.tileHeight": 34,
+    "map.width": 25,
+    "openFiles": [
+        "labymap.tmx"
+    ],
+    "project": "labmap.tiled-project",
+    "recentFiles": [
+        "labymap.tmx"
+    ],
+    "tileset.embedInMap": true,
+    "tileset.transparentColor": "#000000",
+    "tileset.useTransparentColor": true
+}
