@@ -6,7 +6,8 @@ var config = {
     physics: {
         default: 'arcade',
         arcade: {
-            debug: true
+            debug: true,
+            tileBias: 48,
         }
     },
     scene: {
@@ -18,6 +19,7 @@ var config = {
 var sprite;
 var group;
 let cursorPosition;
+let win = false;
 
 var game = new Phaser.Game(config);
 
@@ -33,57 +35,58 @@ function preload ()
 
 function create ()
 {
+    // -------- Background setup --------
+    
     backGround = this.add.image(0,0,'backGround');
     backGround.setOrigin(0,0);
     
+    // -------- Tilemap setup --------
+    
     const map = this.make.tilemap({ key: 'walls' });   
     var corals = map.addTilesetImage('coral', 'tiles', 32, 32, 0, 0);   
-    let layer = map.createStaticLayer(0, corals, 0, 50);
-    layer.setCollisionBetween(1,1);
+    let walls = map.createStaticLayer(0, corals, 0, 50);
+    walls.setCollisionByProperty({ collides: true }); // !!! COLLISION NOT DETECTED
+
+    // -------- Shrimp and Goal setup --------
+    
+    shrimp = this.physics.add.image(75, 132, 'shrimp');
+    goal = this.physics.add.image(600, 500,'star');
+    
+    // -------- Draggable shrimp setup --------
     
     let padding = 20;
-    shrimp = this.physics.add.image(75, 132, 'shrimp');
     shrimp.setInteractive(
         {
             draggable: true,
-            // SETUP hitarea
+            // SETUP hitArea
             hitArea: new Phaser.Geom.Rectangle(
                 - padding,
                 - padding,
                 shrimp.width + padding * 2,
                 shrimp.height + padding * 2 ),
-                //Check hitarea
+                //Check hitArea
                 hitAreaCallback: function(hitArea, x, y){
                     return Phaser.Geom.Rectangle.Contains(hitArea, x, y);
                 }
             }
             );
-            
+    
     this.input.on('drag', function (pointer, obj, dragX, dragY) {
-        obj.x = dragX;
-        obj.y = dragY;
-    });
-            
-    goal = this.physics.add.image(600, 500,'star');
-            
-    //this.physics.add.collider(shrimp, layer, CollisionLayer, null, this);
+            obj.x = dragX;
+            obj.y = dragY;
+        });
+    
+    // -------- Colliders setup ---------
+    
+    this.physics.add.collider(shrimp, walls);
     this.physics.add.collider(shrimp, goal, CollisionStar, null, this);
-            
+    
+    
+    // Need to add a timer and fix the collision problem...
+
 }
 
-
-// function CollisionLayer()
-// {
-//     if(Phaser.Geom.Intersects.RectangleToRectangle(shrimp.getBounds(),layer.getBounds())) 
-//     {
-//         let timerWin = this.time.addEvent({
-//         delay: 200,
-//         callback: youWin,
-//         callbackScope: this,
-//         repeat: 0 
-//             });
-//     }
-// }
+// ------- Collision shrimp/star ------- 
 
 function CollisionStar()
 {
@@ -98,8 +101,16 @@ function CollisionStar()
     }
 }
 
+// ------- Win Text function --------
+
 function youWin()
 {
     this.add.text(300, 250, "You Win!", { fontFamily: 'Arial', fontSize: 60, color: '#ffffff' });   
 }
 
+// ------- Lose Text function --------
+
+function youLose()
+{
+    this.add.text(300, 250, "You Lose...", { fontFamily: 'Arial', fontSize: 60, color: '#ffffff' });   
+}

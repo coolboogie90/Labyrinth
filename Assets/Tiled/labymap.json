@@ -32,7 +32,7 @@
  "nextobjectid":1,
  "orientation":"orthogonal",
  "renderorder":"right-down",
- "tiledversion":"1.9.1",
+ "tiledversion":"1.9.2",
  "tileheight":34,
  "tilesets":[
         {
@@ -46,6 +46,16 @@
          "spacing":0,
          "tilecount":1,
          "tileheight":32,
+         "tiles":[
+                {
+                 "id":0,
+                 "properties":[
+                        {
+                         "name":"collides",
+                         "type":"bool",
+                         "value":true
+                        }]
+                }],
          "tilewidth":32,
          "transparentcolor":"#000000"
         }],
