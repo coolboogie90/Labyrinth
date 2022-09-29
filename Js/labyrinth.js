@@ -29,7 +29,7 @@ function preload ()
     this.load.image('shrimp', 'Assets/Images/shrimp1.png');
     this.load.image('star', 'Assets/Images/cuteStar1.png');
     this.load.image('tiles', 'Assets/Images/coral.png');
-    this.load.tilemapTiledJSON('walls', 'Assets/Tiled/labymap.json');
+    this.load.tilemapTiledJSON('walls', 'Assets/Tiled/mapcoral.json');
     
 }
 
@@ -43,14 +43,15 @@ function create ()
     // -------- Tilemap setup --------
     
     const map = this.make.tilemap({ key: 'walls' });   
-    var corals = map.addTilesetImage('coral', 'tiles', 32, 32, 0, 0);   
+    var corals = map.addTilesetImage('corals', 'tiles', 32, 32, 0, 0);   
     let walls = map.createStaticLayer(0, corals, 0, 50);
-    walls.setCollisionByProperty({ collides: true }); // !!! COLLISION NOT DETECTED
+    //walls.setCollisionByProperty({ collides: true }); // !!! COLLISION NOT DETECTED
+    walls.setCollisionBetween(1, 1000);
 
     // -------- Shrimp and Goal setup --------
     
     shrimp = this.physics.add.image(75, 132, 'shrimp');
-    goal = this.physics.add.image(600, 500,'star');
+    goal = this.physics.add.image(675, 460,'star');
     
     // -------- Draggable shrimp setup --------
     
@@ -78,7 +79,7 @@ function create ()
     
     // -------- Colliders setup ---------
     
-    this.physics.add.collider(shrimp, walls);
+    this.physics.add.collider(shrimp, corals);
     this.physics.add.collider(shrimp, goal, CollisionStar, null, this);
     
     
