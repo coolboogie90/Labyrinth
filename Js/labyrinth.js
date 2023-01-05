@@ -17,6 +17,7 @@ var config = {
 };
 
 var sprite;
+var timer;
 var group;
 let cursorPosition;
 let win = false;
@@ -29,7 +30,7 @@ function preload ()
     this.load.image('shrimp', 'Assets/Images/shrimp1.png');
     this.load.image('star', 'Assets/Images/cuteStar1.png');
     this.load.image('tiles', 'Assets/Images/coral.png');
-    this.load.tilemapTiledJSON('walls', 'Assets/Tiled/mapcoral.json');
+    this.load.tilemapTiledJSON('walls', 'Assets/Tiled/last_try.json');
     
 }
 
@@ -43,10 +44,10 @@ function create ()
     // -------- Tilemap setup --------
     
     const map = this.make.tilemap({ key: 'walls' });   
-    var corals = map.addTilesetImage('corals', 'tiles', 32, 32, 0, 0);   
-    let walls = map.createStaticLayer(0, corals, 0, 50);
-    //walls.setCollisionByProperty({ collides: true }); // !!! COLLISION NOT DETECTED
-    walls.setCollisionBetween(1, 1000);
+    var corals = map.addTilesetImage('Corals', 'tiles', 32, 32, 0, 0);   
+    let wallsLayer = map.createStaticLayer(0, corals, 0, 50);
+    wallsLayer.setCollisionByProperty({ collides: true }); // !!! COLLISION NOT DETECTED
+    //walls.setCollisionBetween(1, 1000);
 
     // -------- Shrimp and Goal setup --------
     
@@ -79,10 +80,35 @@ function create ()
     
     // -------- Colliders setup ---------
     
-    this.physics.add.collider(shrimp, corals);
+    this.physics.add.collider(shrimp, wallsLayer);
     this.physics.add.collider(shrimp, goal, CollisionStar, null, this);
     
-    
+    // --------- Timer setup -----------
+
+    // this.textCounter = this.add.text(20, 100, this.counter, {
+    //     font: "bold 32px Arial",
+    //     fill: "#fff",
+    //     boundsAlignH: "left",
+    //     boundsAlignV: "middle"
+    // });
+
+    // bombAnimation = this.anims.create({
+    //     key: 'bombAnimate',
+    //     frames: this.anims.generateFrameNumbers('bomb'),
+    //     frameRate: 20,
+    //     repeat: -1
+    // });
+
+    // bombAnim = this.add.sprite(100, 120, 'bomb');
+    // bombAnim.play('bombAnimate');
+
+    // let timer = this.time.addEvent({
+    //     delay: 1000,
+    //     callback: this.updateCounter,
+    //     callbackScope: this,
+    //     loop : true
+    // });
+
     // Need to add a timer and fix the collision problem...
 
 }
@@ -115,3 +141,5 @@ function youLose()
 {
     this.add.text(300, 250, "You Lose...", { fontFamily: 'Arial', fontSize: 60, color: '#ffffff' });   
 }
+
+// ------- Win/Lose function here -------
